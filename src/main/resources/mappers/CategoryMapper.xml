@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射文件的namespace一定要和对应mapper接口的全类名一致-->
+<mapper namespace="com.atguigu.blog.mapper.CategoryMapper">
+
+    <select id="queryList" resultType="category">
+        select * from category
+        <where>
+            <if test="cid != null and cid != ''">
+                cid = #{cid}
+            </if>
+            <if test="cname != null and cname != ''">
+                cname like "%"#{cname}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="findPage" resultType="category">
+        select * from category
+        <where>
+            <if test="category.cname != null and category.cname != ''">
+                cname like "%"#{category.cname}"%"
+            </if>
+        </where>
+        limit #{beginIndex},#{pageSize}
+    </select>
+
+    <insert id="addCategory">
+        insert into category(cname) values(#{cname})
+    </insert>
+
+    <delete id="deleteCategory">
+        delete from category where cid = #{cid}
+    </delete>
+
+    <update id="updateCategory">
+        update category
+        <set>
+            <if test="cname != null and cname != ''">
+                cname = #{cname},
+            </if>
+        </set>
+        where cid = #{cid}
+    </update>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射文件的namespace一定要和对应mapper接口的全类名一致-->
+<mapper namespace="com.atguigu.blog.mapper.UserMapper">
+    <select id="getUserById" resultType="user">
+        select * from user where uid = #{uid}
+    </select>
+
+    <insert id="addUser">
+        insert into user(uid,username,password,phone,introduction) values(#{uid},#{username},#{password},#{phone},#{introduction})
+    </insert>
+
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+</mapper>
